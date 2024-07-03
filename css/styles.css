@@ -8,6 +8,9 @@ body {
 h1 {
   color: #333;
 }
+#total {
+  display: flex;
+}
 #countries-list {
   display: flex;
   flex-direction: row;
@@ -17,3 +20,15 @@ h1 {
 #sinDetalles{
   display: flex;
 }
+#conDetalles {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    background-color: #4CAF50;
+    z-index: 1000;
+    display: none;
+}
+

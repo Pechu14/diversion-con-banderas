@@ -26,24 +26,45 @@
     });
 }*/
 
+function mostrarCuadrado(bandera) {
+    const conDetalledDiv = document.getElementById('conDetalles')
+    conDetalledDiv.style.display = 'block';
+    
+    conDetalledDiv.innerHTML = '<img src= ' + bandera.flags[1] + '></img>' +
+                                '<h2>' + bandera.name.common + '</h2>' +
+                                '<p>Capital: ' + bandera.capital + '</p>' +
+                                '<p>Población:' + bandera.population + '</p>' +
+                                '<p>Lado de la carretera: ' + bandera.car.side +'</p>'
+
+    const buttonCerrar = document.createElement('button');
+    buttonCerrar.innerHTML = 'Cerrar'
+    buttonCerrar.addEventListener('click', ocultarCuadrado);
+    conDetalledDiv.appendChild(buttonCerrar)
+}
+
+function ocultarCuadrado() {
+    const conDetalledDiv = document.getElementById('conDetalles')
+    conDetalledDiv.style.display = 'none';
+}
+
+
 function fetchBanderasConThen() {
     fetch('https://restcountries.com/v3/all')
         .then(response => response.json())
         .then((response) => {
-            console.log("🚀 ~ fetchBanderasConThen ~ response:", response)
             let banderas = response;
             const mostartEnPantalla = (banderas) => {
                 const countriesList = document.getElementById('countries-list');
             
-                let totalDivs =''
                 banderas.forEach(bandera => {
-                    let  divBandera = '<div id= "sinDetalles>' +
-                    '<img src=' + bandera.flags[1] + '> </img>' +
-                    '<p>' + bandera.name.common + '</p>' +
-                     '</div>';
-                    totalDivs = totalDivs + divBandera;
+                    const divBandera = document.createElement('div');
+                    divBandera.className = 'sinDetalles';
+                    divBandera.innerHTML = '<img src=' + bandera.flags[1] + '> </img>' +
+                                                '<p>' + bandera.name.common + '</p>'
+                    divBandera.addEventListener('click', () => mostrarCuadrado(bandera));
+                    countriesList.appendChild(divBandera);
                 })
-                countriesList.innerHTML = totalDivs;
+                
             }
             mostartEnPantalla(banderas)
         })
@@ -54,7 +75,11 @@ function fetchBanderasConThen() {
 
 
 
+
+
 fetchBanderasConThen();
+
+
 
 
 
